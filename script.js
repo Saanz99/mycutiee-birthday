@@ -1,69 +1,88 @@
-const envelopeScene = document.getElementById('envelope-scene');
-const mainContent = document.getElementById('main-content');
+const noBtn = document.getElementById('noBtn');
+const yesBtn = document.getElementById('yesBtn');
+const quizScreen = document.getElementById('quiz-screen');
+const mainScreen = document.getElementById('main-screen');
 const musik = document.getElementById('bgMusic');
 
-// 1. Logika Buka Surat
-envelopeScene.addEventListener('click', () => {
-    document.querySelector('.flap').style.transform = 'rotateX(180deg)';
-    setTimeout(() => {
-        document.querySelector('.letter').style.transform = 'translateY(-50px)';
-        envelopeScene.style.opacity = '0';
-        musik.play(); // Musik mulai jalan
-        
-        setTimeout(() => {
-            envelopeScene.classList.add('hidden');
-            mainContent.classList.remove('hidden');
-            startMagic();
-        }, 1000);
-    }, 600);
+// 1. EFEK TOMBOL "ENGGAK" KABUR JIKA DI-HOVER / DI-SENTUH
+function moveButton() {
+    // Menghitung batas acak agar tombol tidak keluar layar HP
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40) + 20;
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40) + 20;
+    
+    noBtn.style.position = 'fixed';
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+}
+
+noBtn.addEventListener('mouseover', moveButton);
+noBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Mencegah klik di HP
+    moveButton();
 });
 
-// 2. Logika Efek Setelah Web Terbuka
-function startMagic() {
-    // Jalankan Love Meter
-    setTimeout(() => {
-        document.getElementById('bar-fill').style.width = '100%';
-        let val = 0;
-        let interval = setInterval(() => {
-            if(val >= 100) clearInterval(interval);
-            document.getElementById('meter-val').innerText = val + '%';
-            val++;
-        }, 20);
-    }, 500);
+// 2. KETIKA KLIK "IYA DONG!" (MASUK KE UTAMA)
+yesBtn.addEventListener('click', () => {
+    quizScreen.classList.add('hidden');
+    mainScreen.classList.remove('hidden');
+    
+    // Putar musik (Aman dari blokir browser karena ada klik user)
+    musik.play().catch(err => console.log("Audio play blocked"));
+    
+    // Jalankan efek typewriter romantis
+    startStory();
+});
 
-    // Jalankan Typewriter emosional
-    const text = "Di umur yang ke-18 ini, aku cuma mau bilang kalau kamu adalah hal terbaik yang pernah hadir di hidupku. Teruslah bersinar, mycutiee... Aku akan selalu ada di sini mendukungmu. 💗";
+// 3. KATA-KATA BARU: LEBIH LUWES, LUCU, TAPI SANGAT DALAM
+const romanticText = "Happy Sweet 18th, Sayang... 💗 Akhirnya legal juga ya! Hehe. Makasih ya udah lahir ke dunia dan selalu jadi alasan aku buat senyum setiap hari. Kamu itu definisi 'cutie' yang beneran nyata di hidup aku. Jangan pernah bosen sama aku ya? Di umur yang ke-18 ini, aku berdoa semoga kamu makin dewasa, makin bahagia, dan semua hal baik datang ke hidup kamu. I love you today, tomorrow, and forever, mycutiee! ✨🌸";
+
+function startStory() {
     let i = 0;
-    const speed = 70;
+    const speed = 50; // Kecepatan ngetik teks
+    const storyContainer = document.getElementById('story-text');
+    
     function type() {
-        if (i < text.length) {
-            document.getElementById('typewriter').innerHTML += text.charAt(i);
+        if (i < romanticText.length) {
+            storyContainer.innerHTML += romanticText.charAt(i);
             i++;
             setTimeout(type, speed);
         }
     }
-    setTimeout(type, 1500);
+    setTimeout(type, 1200); // Jeda sebentar setelah foto jatuh selesai
 }
 
-// 3. Final Surprise (Confetti & Wishes)
-document.getElementById('finalSurprise').addEventListener('click', function() {
-    this.innerHTML = "Wishes Sent to Universe! ✨";
+// 4. EFEK KETIKA LAYAR DIKLIK (MUNCUL HATI INTERAKTIF)
+mainScreen.addEventListener('click', (e) => {
+    // Jangan picu jika yang diklik adalah tombol final
+    if(e.target.id === 'celebrateBtn') return;
+
+    const heart = document.createElement('div');
+    heart.classList.add('click-heart');
     
-    // Kembang Api Confetti
-    var duration = 15 * 1000;
-    var animationEnd = Date.now() + duration;
-    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    const elements = ["💗", "💖", "🌸", "✨", "🦋"];
+    heart.innerText = elements[Math.floor(Math.random() * elements.length)];
+    
+    heart.style.left = `${e.clientX}px`;
+    heart.style.top = `${e.clientY}px`;
+    
+    document.body.appendChild(heart);
+    
+    setTimeout(() => heart.remove(), 1000);
+});
 
-    function randomInRange(min, max) {
-      return Math.random() * (max - min) + min;
-    }
+// 5. TOMBOL FINAL CELEBRATE (CONFETTI MEGAH)
+document.getElementById('celebrateBtn').addEventListener('click', function() {
+    this.innerText = "I Love You So Much! 😭❤️";
+    
+    // Efek kembang api confetti menyebar mewah
+    var end = Date.now() + (5 * 1000); // Durasi 5 detik
 
-    var interval = setInterval(function() {
-      var timeLeft = animationEnd - Date.now();
-      if (timeLeft <= 0) return clearInterval(interval);
+    (function frame() {
+      confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+      confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
 
-      var particleCount = 50 * (timeLeft / duration);
-      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-    }, 250);
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
 });
