@@ -12,7 +12,16 @@ unlockBtn.addEventListener('click', () => {
     introOverlay.style.pointerEvents = 'none';
     appContent.classList.remove('blur-hidden');
     
-    musik.play().catch(err => console.log("Audio play blocked"));
+    // Pemicu Audio yang Lebih Kuat (Force Reload & Play)
+    musik.load(); // Paksa browser download ulang file mp3-nya
+    musik.play().then(() => {
+        console.log("Musik sukses berputar!");
+    }).catch(err => {
+        // Jika gagal, sistem akan memberi tahu error-nya lewat pop-up
+        alert("Waduh, browser kamu memblokir musik. Coba cek volume HP atau gunakan Chrome/Brave!");
+        console.log("Audio play blocked", err);
+    });
+    
     initScratchCard();
 });
 
