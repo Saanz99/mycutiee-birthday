@@ -3,41 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Mission for Mycutiee 💗</title>
+    <title>The Miracle of 18 | mycutiee 💗</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <audio id="bgMusic" src="musik.mp3" loop></audio>
+    <div id="sparkle-container"></div>
 
-    <div id="quiz-screen">
-        <div class="quiz-box">
-            <div class="emoji-bounce">👀❓</div>
-            <h2>Verifikasi Keamanan Sistem</h2>
-            <p>Apakah kamu benar perempuan paling cantik, gemesin, dan kesayangan aku yang bernama <strong>mycutiee</strong>?</p>
-            <div class="btn-group">
-                <button id="yesBtn">Iya Dong! 🥰</button>
-                <button id="noBtn">Enggak 😜</button>
-            </div>
+    <div id="intro-overlay">
+        <div class="intro-glass">
+            <div class="pulse-ring"></div>
+            <button id="unlockBtn">Unwrap Your Gift 🎁</button>
         </div>
     </div>
 
-    <div id="main-screen" class="hidden">
-        <div id="glow-particles"></div>
+    <main id="app-content" class="blur-hidden">
+        <div class="ambient-glow"></div>
         
-        <div class="wrapper">
-            <div class="polaroid">
-                <img src="mycutiee.jpg.jpeg" alt="My Cutiee">
-                <div class="tag">Happy Sweet 18th, Sayang! 🌸</div>
+        <div class="grid-container">
+            <div class="card-3d-wrap">
+                <div class="card-3d" id="photoCard">
+                    <div class="card-bg">
+                        <img src="mycutiee.jpg.jpeg" alt="My Cutiee">
+                    </div>
+                    <div class="card-glow"></div>
+                    <div class="card-label">Sweet 18th Milestone ✨</div>
+                </div>
             </div>
 
-            <h1 class="sparkle-text">Happy 18th Birthday,<br><span class="nickname">mycutiee💗💗</span></h1>
-            
-            <div id="story-text" class="romantic-story"></div>
-
-            <button id="celebrateBtn">Kirim Peluk & Cium 👑</button>
+            <div class="interactive-box">
+                <h1 class="neon-title">Happy Birthday, <br><span class="highlight">mycutiee💗💗</span></h1>
+                
+                <div class="scratch-container">
+                    <div class="secret-message">
+                        <h3>To: My Cutiee 🌸</h3>
+                        <p>Selamat ulang tahun yang ke-18, sayang! Hari ini duniaku merayakan hari lahirnya manusia paling favorit sepanjang masa. Makasih ya udah bertahan, berjuang, dan selalu jadi rumah ternyaman buat aku. Di umur legal ini, melangkahlah dengan bahagia. Aku bakal selalu ada di belakangmu, jadi pendukung nomor satumu. I love you to the moon and back! 🌙❤️</p>
+                    </div>
+                    <canvas id="scratchCanvas"></canvas>
+                    <div id="scratch-hint">GOSOK LAYARNYA PAKAI JARI KAMU ✨</div>
+                </div>
+                
+                <button id="sparkBtn">Bawa Aku Ke Semestamu ✨</button>
+            </div>
         </div>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
