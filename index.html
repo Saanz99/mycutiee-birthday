@@ -3,49 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Gift for Mycutiee💗</title>
+    <title>Special Mission for Mycutiee 💗</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <audio id="bgMusic" src="musik.mp3" loop></audio>
 
-    <div id="envelope-scene" class="active">
-        <div class="envelope-wrapper">
-            <div class="envelope">
-                <div class="flap"></div>
-                <div class="letter">
-                    <p>Click for a Surprise 💗</p>
-                </div>
+    <div id="quiz-screen">
+        <div class="quiz-box">
+            <div class="emoji-bounce">👀❓</div>
+            <h2>Verifikasi Keamanan Sistem</h2>
+            <p>Apakah kamu benar perempuan paling cantik, gemesin, dan kesayangan aku yang bernama <strong>mycutiee</strong>?</p>
+            <div class="btn-group">
+                <button id="yesBtn">Iya Dong! 🥰</button>
+                <button id="noBtn">Enggak 😜</button>
             </div>
-            <div class="heart-seal"></div>
         </div>
-        <h2 class="tap-text">Ada surat untuk mycutiee... <br> (Ketuk untuk buka)</h2>
     </div>
 
-    <div id="main-content" class="hidden">
-        <div id="particles"></div>
-        <div class="container">
-            <div class="polaroid-frame">
+    <div id="main-screen" class="hidden">
+        <div id="glow-particles"></div>
+        
+        <div class="wrapper">
+            <div class="polaroid">
                 <img src="mycutiee.jpg.jpeg" alt="My Cutiee">
-                <div class="caption">Happy Sweet 18th! 🌸</div>
+                <div class="tag">Happy Sweet 18th, Sayang! 🌸</div>
             </div>
+
+            <h1 class="sparkle-text">Happy 18th Birthday,<br><span class="nickname">mycutiee💗💗</span></h1>
             
-            <h1 class="header-text">Happy Birthday,<br><span>mycutiee💗💗</span></h1>
-            
-            <div class="timer">
-                <p>Kamu sudah mewarnai duniaku selama:</p>
-                <div id="countdown">18 Tahun Kebahagiaan</div>
-            </div>
+            <div id="story-text" class="romantic-story"></div>
 
-            <div id="typewriter" class="magic-text"></div>
-
-            <div class="love-meter">
-                <p>Love Meter: <span id="meter-val">0%</span></p>
-                <div class="bar-bg"><div id="bar-fill"></div></div>
-            </div>
-
-            <button id="finalSurprise">Blowing Wishes 🕯️</button>
+            <button id="celebrateBtn">Kirim Peluk & Cium 👑</button>
         </div>
     </div>
 
