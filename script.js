@@ -1,94 +1,69 @@
-// Kata-kata akan diketik otomatis baris demi baris
-const messages = [
-    "Selamat ulang tahun yang ke-18 untuk perempuan paling spesial! 💗",
-    "Di umur yang baru ini, semoga kamu semakin bahagia, sehat selalu...",
-    "dan semua mimpimu perlahan terwujud ✨",
-    "Terima kasih sudah lahir ke dunia ini dan menjadi bagian terindah dalam hidupku.",
-    "You mean the world to me. I love you! 🥰"
-];
+const envelopeScene = document.getElementById('envelope-scene');
+const mainContent = document.getElementById('main-content');
+const musik = document.getElementById('bgMusic');
 
-let messageIndex = 0;
-let charIndex = 0;
-const typingSpeed = 50; // Kecepatan ngetik
-const textElement = document.getElementById("typewriter-text");
-
-function typeWriter() {
-    if (messageIndex < messages.length) {
-        if (charIndex < messages[messageIndex].length) {
-            textElement.innerHTML += messages[messageIndex].charAt(charIndex);
-            charIndex++;
-            setTimeout(typeWriter, typingSpeed);
-        } else {
-            textElement.innerHTML += "<br><br>";
-            messageIndex++;
-            charIndex = 0;
-            setTimeout(typeWriter, 800); // Jeda sebelum mengetik kalimat baru
-        }
-    }
-}
-
-// Menjalankan animasi efek kelap-kelip & ngetik saat web dibuka
-window.onload = () => {
-    typeWriter();
-    createFireflies();
-};
-
-function createFireflies() {
-    const particles = document.getElementById("particles");
-    for (let i = 0; i < 40; i++) {
-        let firefly = document.createElement("div");
-        firefly.classList.add("firefly");
-        firefly.style.width = Math.random() * 5 + 2 + "px";
-        firefly.style.height = firefly.style.width;
-        firefly.style.left = Math.random() * 100 + "vw";
-        firefly.style.top = Math.random() * 100 + "vh";
-        firefly.style.animationDelay = Math.random() * 5 + "s";
-        particles.appendChild(firefly);
-    }
-}
-
-// Animasi ledakan hati saat tombol diklik
-document.getElementById("surpriseBtn").addEventListener("click", function() {
-    this.innerText = "I Love You More! 💖";
-    this.style.background = "linear-gradient(45deg, #ff1744, #d50000)";
-    
-    // Titik pusat ledakan (di tengah layar)
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    
-    // Membuat 80 partikel meledak
-    for (let i = 0; i < 80; i++) {
-        setTimeout(() => createExplosiveHeart(centerX, centerY), i * 15);
-    }
+// 1. Logika Buka Surat
+envelopeScene.addEventListener('click', () => {
+    document.querySelector('.flap').style.transform = 'rotateX(180deg)';
+    setTimeout(() => {
+        document.querySelector('.letter').style.transform = 'translateY(-50px)';
+        envelopeScene.style.opacity = '0';
+        musik.play(); // Musik mulai jalan
+        
+        setTimeout(() => {
+            envelopeScene.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            startMagic();
+        }, 1000);
+    }, 600);
 });
 
-function createExplosiveHeart(x, y) {
-    const heart = document.createElement("div");
-    heart.classList.add("explosive-heart");
-    
-    const emojis = ["💗", "💖", "✨", "💕", "🌸", "🦋"];
-    heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-    
-    document.body.appendChild(heart);
-    
-    // Posisi awal di tengah
-    heart.style.left = x + "px";
-    heart.style.top = y + "px";
-    
-    // Arah ledakan acak (360 derajat)
-    const angle = Math.random() * Math.PI * 2;
-    const velocity = 100 + Math.random() * 300; // Jarak tembakan hati
-    
-    const tx = Math.cos(angle) * velocity;
-    const ty = Math.sin(angle) * velocity;
-    const rot = Math.random() * 360; // Rotasi acak
-    
-    heart.style.setProperty('--tx', tx + "px");
-    heart.style.setProperty('--ty', ty + "px");
-    heart.style.setProperty('--rot', rot + "deg");
-    
-    // Hapus elemen agar tidak bikin berat HP
+// 2. Logika Efek Setelah Web Terbuka
+function startMagic() {
+    // Jalankan Love Meter
     setTimeout(() => {
-        heart.remove();
-    }, 1500);
+        document.getElementById('bar-fill').style.width = '100%';
+        let val = 0;
+        let interval = setInterval(() => {
+            if(val >= 100) clearInterval(interval);
+            document.getElementById('meter-val').innerText = val + '%';
+            val++;
+        }, 20);
+    }, 500);
+
+    // Jalankan Typewriter emosional
+    const text = "Di umur yang ke-18 ini, aku cuma mau bilang kalau kamu adalah hal terbaik yang pernah hadir di hidupku. Teruslah bersinar, mycutiee... Aku akan selalu ada di sini mendukungmu. 💗";
+    let i = 0;
+    const speed = 70;
+    function type() {
+        if (i < text.length) {
+            document.getElementById('typewriter').innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    setTimeout(type, 1500);
 }
+
+// 3. Final Surprise (Confetti & Wishes)
+document.getElementById('finalSurprise').addEventListener('click', function() {
+    this.innerHTML = "Wishes Sent to Universe! ✨";
+    
+    // Kembang Api Confetti
+    var duration = 15 * 1000;
+    var animationEnd = Date.now() + duration;
+    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    var interval = setInterval(function() {
+      var timeLeft = animationEnd - Date.now();
+      if (timeLeft <= 0) return clearInterval(interval);
+
+      var particleCount = 50 * (timeLeft / duration);
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }, 250);
+});
