@@ -3,24 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 18th Birthday, mycutiee💗💗</title>
+    <title>A Special Gift for Mycutiee💗</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-    <div id="particles"></div> 
-    
-    <div class="container">
-        <h1 class="glow">Happy Sweet 18th,<br>mycutiee💗💗</h1>
-        
-        <div class="photo-frame">
-            <img id="girlfriendPhoto" src="mycutiee.jpg.jpeg" alt="Foto Pacar Tersayang">
-        </div>
+    <audio id="bgMusic" src="musik.mp3" loop></audio>
 
-        <div id="typewriter-text" class="message"></div>
-        
-        <button id="surpriseBtn">Klik untuk Kejutan 🎁</button>
+    <div id="envelope-scene" class="active">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="flap"></div>
+                <div class="letter">
+                    <p>Click for a Surprise 💗</p>
+                </div>
+            </div>
+            <div class="heart-seal"></div>
+        </div>
+        <h2 class="tap-text">Ada surat untuk mycutiee... <br> (Ketuk untuk buka)</h2>
     </div>
-    
+
+    <div id="main-content" class="hidden">
+        <div id="particles"></div>
+        <div class="container">
+            <div class="polaroid-frame">
+                <img src="mycutiee.jpg.jpeg" alt="My Cutiee">
+                <div class="caption">Happy Sweet 18th! 🌸</div>
+            </div>
+            
+            <h1 class="header-text">Happy Birthday,<br><span>mycutiee💗💗</span></h1>
+            
+            <div class="timer">
+                <p>Kamu sudah mewarnai duniaku selama:</p>
+                <div id="countdown">18 Tahun Kebahagiaan</div>
+            </div>
+
+            <div id="typewriter" class="magic-text"></div>
+
+            <div class="love-meter">
+                <p>Love Meter: <span id="meter-val">0%</span></p>
+                <div class="bar-bg"><div id="bar-fill"></div></div>
+            </div>
+
+            <button id="finalSurprise">Blowing Wishes 🕯️</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
