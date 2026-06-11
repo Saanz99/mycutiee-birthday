@@ -1,124 +1,69 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500;700&display=swap');
+const envelopeScene = document.getElementById('envelope-scene');
+const mainContent = document.getElementById('main-content');
+const musik = document.getElementById('bgMusic');
 
-:root {
-    --primary: #ff85a2;
-    --secondary: #fce4ec;
-    --accent: #ff4081;
+// 1. Logika Buka Surat
+envelopeScene.addEventListener('click', () => {
+    document.querySelector('.flap').style.transform = 'rotateX(180deg)';
+    setTimeout(() => {
+        document.querySelector('.letter').style.transform = 'translateY(-50px)';
+        envelopeScene.style.opacity = '0';
+        musik.play(); // Musik mulai jalan
+        
+        setTimeout(() => {
+            envelopeScene.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            startMagic();
+        }, 1000);
+    }, 600);
+});
+
+// 2. Logika Efek Setelah Web Terbuka
+function startMagic() {
+    // Jalankan Love Meter
+    setTimeout(() => {
+        document.getElementById('bar-fill').style.width = '100%';
+        let val = 0;
+        let interval = setInterval(() => {
+            if(val >= 100) clearInterval(interval);
+            document.getElementById('meter-val').innerText = val + '%';
+            val++;
+        }, 20);
+    }, 500);
+
+    // Jalankan Typewriter emosional
+    const text = "Di umur yang ke-18 ini, aku cuma mau bilang kalau kamu adalah hal terbaik yang pernah hadir di hidupku. Teruslah bersinar, mycutiee... Aku akan selalu ada di sini mendukungmu. 💗";
+    let i = 0;
+    const speed = 70;
+    function type() {
+        if (i < text.length) {
+            document.getElementById('typewriter').innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    setTimeout(type, 1500);
 }
 
-body {
-    margin: 0; padding: 0;
-    font-family: 'Quicksand', sans-serif;
-    background: #fdf2f4;
-    height: 100vh;
-    display: flex; justify-content: center; align-items: center;
-    overflow: hidden;
-}
+// 3. Final Surprise (Confetti & Wishes)
+document.getElementById('finalSurprise').addEventListener('click', function() {
+    this.innerHTML = "Wishes Sent to Universe! ✨";
+    
+    // Kembang Api Confetti
+    var duration = 15 * 1000;
+    var animationEnd = Date.now() + duration;
+    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-/* Animasi Amplop */
-#envelope-scene {
-    cursor: pointer;
-    text-align: center;
-    transition: 1s ease;
-}
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
 
-.envelope-wrapper {
-    position: relative;
-    width: 200px; height: 150px;
-    background: #ff85a2;
-    margin: 0 auto;
-}
+    var interval = setInterval(function() {
+      var timeLeft = animationEnd - Date.now();
+      if (timeLeft <= 0) return clearInterval(interval);
 
-.envelope {
-    position: relative;
-    width: 100%; height: 100%;
-    background: var(--primary);
-}
-
-.flap {
-    position: absolute; top: 0; left: 0;
-    border-left: 100px solid transparent;
-    border-right: 100px solid transparent;
-    border-top: 90px solid #ff4d7d;
-    transform-origin: top;
-    transition: 0.6s ease;
-    z-index: 3;
-}
-
-.letter {
-    position: absolute; bottom: 10px; left: 10%;
-    width: 80%; height: 80%;
-    background: white;
-    z-index: 2;
-    display: flex; align-items: center; justify-content: center;
-    transition: 0.6s ease;
-}
-
-.heart-seal {
-    position: absolute; top: 45%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px; height: 40px;
-    background: #d81b60;
-    clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
-    z-index: 4;
-    animation: beat 1s infinite;
-}
-
-@keyframes beat { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.2); } }
-
-/* Konten Utama */
-.hidden { display: none !important; }
-
-#main-content {
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
-    display: flex; justify-content: center; align-items: center;
-}
-
-.container {
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(10px);
-    padding: 30px; border-radius: 30px;
-    width: 350px; text-align: center;
-    border: 2px solid white;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-}
-
-/* Efek Polaroid */
-.polaroid-frame {
-    background: white;
-    padding: 10px 10px 30px 10px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    transform: rotate(-3deg);
-    margin-bottom: 20px;
-}
-
-.polaroid-frame img {
-    width: 100%; height: 250px; object-fit: cover;
-}
-
-.caption {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem; color: #d81b60; margin-top: 10px;
-}
-
-.header-text { font-size: 1.2rem; color: #555; }
-.header-text span { color: var(--accent); font-family: 'Dancing Script'; font-size: 2.2rem; }
-
-.magic-text {
-    font-size: 1rem; color: #444; line-height: 1.5;
-    margin: 20px 0; min-height: 80px;
-}
-
-/* Love Meter */
-.love-meter { margin: 20px 0; }
-.bar-bg { background: #eee; height: 10px; border-radius: 5px; overflow: hidden; }
-#bar-fill { background: var(--accent); width: 0%; height: 100%; transition: 2s; }
-
-button {
-    background: var(--accent); color: white; border: none;
-    padding: 15px 30px; border-radius: 25px; font-weight: bold;
-    cursor: pointer; transition: 0.3s;
-}
-
-button:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--primary); }
+      var particleCount = 50 * (timeLeft / duration);
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }, 250);
+});
