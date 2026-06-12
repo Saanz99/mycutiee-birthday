@@ -3,51 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Miracle of 18 | mycutiee 💗</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <title>Happy Birthday, My Cutiee 💗</title>
+    <meta name="description" content="Sweet 18th Milestone ✨ - Sebuah kejutan spesial untuk manusia paling favorit sepanjang masa.">
+    <meta property="og:title" content="Happy Birthday, My Cutiee 💗">
+    <meta property="og:description" content="Sweet 18th Milestone ✨ - Klik link ini untuk melihat kejutanmu!">
+    <meta property="og:image" content="mycutiee.jpg.jpeg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://saanz99.github.io/mycutiee-birthday/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>💗</text></svg>">
+
+    <style>
+        /* --- CSS VARIABLES & BASE --- */
+        :root {
+            --bg-color: #0b0b1e;
+            --primary-color: #ff6b8b;
+            --text-color: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- BACKGROUND BINTANG BERKEDIP --- */
+        .universe-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #1a1a3a 0%, #050510 100%);
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration, 3s) infinite ease-in-out;
+            opacity: var(--opacity, 0.5);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* --- FLASH EFFECT KEYFRAME --- */
+        @keyframes flashEffect {
+            0% { background-color: rgba(255, 255, 255, 0); filter: brightness(1); }
+            25% { background-color: rgba(255, 255, 255, 0.9); filter: brightness(2); }
+            100% { background-color: rgba(255, 255, 255, 0); filter: brightness(1); }
+        }
+
+        .flash-active {
+            animation: flashEffect 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        .flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        /* --- AKSESIBILITAS: FOCUS STATES --- */
+        button, a {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:focus-visible, a:focus-visible {
+            outline: 3px solid var(--primary-color);
+            outline-offset: 3px;
+        }
+
+        /* --- INTERFACE UTAMA & CANVAS --- */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .scratch-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            height: 250px;
+            margin: 20px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: #252545;
+        }
+
+        .scratch-content {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            color: #333;
+            font-weight: bold;
+        }
+
+        #scratchCard {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            touch-action: none; /* Mencegah scroll layar saat menggosok di HP */
+            z-index: 2;
+        }
+
+        .btn-finale {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.4);
+        }
+
+        .btn-finale:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- FINALE SEMESTA OVERLAY --- */
+        #finaleScreen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #0d001a 0%, #020005 100%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.5s ease-in-out;
+            padding: 20px;
+        }
+
+        #finaleScreen.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #finaleCanvas {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 101;
+        }
+
+        .finale-content {
+            position: relative;
+            z-index: 102;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transform: translateY(30px);
+            transition: transform 1.5s cubic-bezier(0.1, 1, 0.1, 1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        #finaleScreen.active .finale-content {
+            transform: translateY(0);
+        }
+
+        .finale-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .finale-text h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .finale-text p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #e0e0ff;
+            text-align: justify;
+        }
+
+        .btn-replay {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.4);
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-top: 25px;
+            font-size: 0.9rem;
+        }
+        .btn-replay:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #fff;
+        }
+
+        /* --- AKSESIBILITAS: PREFERS REDUCED MOTION --- */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-delay: -1ms !important;
+                animation-duration: 1ms !important;
+                animation-iteration-count: 1 !important;
+                background-attachment: initial !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0s !important;
+                transition-delay: 0s !important;
+            }
+            .star { animation: none !important; opacity: 0.6; }
+        }
+    </style>
 </head>
 <body>
-    <audio id="bgMusic" src="musik.mp3" loop></audio>
-    <div id="sparkle-container"></div>
 
-    <div id="intro-overlay">
-        <div class="intro-glass">
-            <div class="pulse-ring"></div>
-            <button id="unlockBtn">Unwrap Your Gift 🎁</button>
+    <audio id="bgMusic" loop src="musik.mp3"></audio>
+    
+    <div id="flashOverlay" class="flash-overlay"></div>
+
+    <div class="universe-bg" id="universeBg"></div>
+
+    <main>
+        <h1>Happy Birthday, <br><span style="color:var(--primary-color)">mycutiee💗</span></h1>
+        <p style="margin-top: 10px; opacity: 0.8;">Sweet 18th Milestone ✨</p>
+
+        <div class="scratch-container" id="scratchContainer">
+            <div class="scratch-content">
+                <p>Coba gosok layar ini pakai jari kamu! ✨</p>
+            </div>
+            <canvas id="scratchCard"></canvas>
+        </div>
+
+        <button class="btn-finale" id="triggerFinale" aria-label="Buka kejutan akhir">Klik Kejutan Terakhir ✨</button>
+    </main>
+
+    <div id="finaleScreen" role="dialog" aria-modal="true" aria-labelledby="finaleTitle">
+        <canvas id="finaleCanvas"></canvas>
+        
+        <div class="finale-content">
+            <img class="finale-img" src="mycutiee.jpg.jpeg" alt="My Cutiee">
+            <div class="finale-text">
+                <h2 id="finaleTitle">Happy 18th Birthday, My Cutiee! 🌸</h2>
+                <p>Selamat ulang tahun yang ke-18, sayang! Hari ini duniaku merayakan hari lahirnya manusia paling favorit sepanjang masa. Makasih ya udah bertahan, berjuang, dan selalu jadi rumah ternyaman buat aku. Di umur legal ini, melangkahlah dengan bahagia. Aku bakal selalu ada di belakangmu, jadi pendukung nomor satumu. I love you to the moon and back! 🌙❤️</p>
+            </div>
+            <button class="btn-replay" id="btnReplay">🔄 Putar Ulang</button>
         </div>
     </div>
 
-    <main id="app-content" class="blur-hidden">
-        <div class="ambient-glow"></div>
-        
-        <div class="grid-container">
-            <div class="card-3d-wrap">
-                <div class="card-3d" id="photoCard">
-                    <div class="card-bg">
-                        <img src="mycutiee.jpg.jpeg" alt="My Cutiee">
-                    </div>
-                    <div class="card-glow"></div>
-                    <div class="card-label">Sweet 18th Milestone ✨</div>
-                </div>
-            </div>
+    <script>
+        // --- 1. MEMBUAT BINTANG BACKGROUND ---
+        function createStars() {
+            const bg = document.getElementById('universeBg');
+            const starCount = window.innerWidth < 768 ? 60 : 120; // Adaptif jumlah bintang di HP
+            bg.innerHTML = '';
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                const size = Math.random() * 2.5 + 0.5;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                star.style.setProperty('--opacity', Math.random());
+                bg.appendChild(star);
+            }
+        }
+        createStars();
 
-            <div class="interactive-box">
-                <h1 class="neon-title">Happy Birthday, <br><span class="highlight">mycutiee💗💗</span></h1>
-                
-                <div class="scratch-container">
-                    <div class="secret-message">
-                        <h3>To: My Cutiee 🌸</h3>
-                        <p>Selamat ulang tahun yang ke-18, sayang! Hari ini duniaku merayakan hari lahirnya manusia paling favorit sepanjang masa. Makasih ya udah bertahan, berjuang, dan selalu jadi rumah ternyaman buat aku. Di umur legal ini, melangkahlah dengan bahagia. Aku bakal selalu ada di belakangmu, jadi pendukung nomor satumu. I love you to the moon and back! 🌙❤️</p>
-                    </div>
-                    <canvas id="scratchCanvas"></canvas>
-                    <div id="scratch-hint">GOSOK LAYARNYA PAKAI JARI KAMU ✨</div>
-                </div>
-                
-                <button id="sparkBtn">Bawa Aku Ke Semestamu ✨</button>
-            </div>
-        </div>
-    </main>
-
-    <script src="script.js"></script>
-</body>
-</html>
+        // Throttling resize agar smooth di HP saat rotasi layar
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                createStars
